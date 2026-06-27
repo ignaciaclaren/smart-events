@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Usuario {
+  email     String @id @db.VarChar(100)
+  password  String @db.VarChar(64)
+  nombre    String @db.VarChar(100)
+  apellido  String @db.VarChar(100)
+  rol       String @db.VarChar(20)
+}
+
+model Evento {
+  id       Int      @id @default(autoincrement())
+  titulo   String   @db.VarChar(100)
+  fecha    DateTime
+  lugar    String   @db.VarChar(100)
+  imagen   String   @db.VarChar(255)
+  valor    Int
+  inscritos Inscrito[]
+}
+
+model Inscrito {
+  id        Int    @id @default(autoincrement())
+  email     String @db.VarChar(100)
+  nombre    String @db.VarChar(100)
+  apellido  String @db.VarChar(100)
+  eventoId  Int
+  evento    Evento  @relation(fields: [eventoId], references: [id])
+}
