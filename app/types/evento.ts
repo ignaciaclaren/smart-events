@@ -4,4 +4,5 @@ export interface Evento{
     fecha: Date
     lugar: string
     valor: number
+    inscritos: Array<{}>
 }
