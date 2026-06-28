@@ -1,8 +1,9 @@
 <script setup lang="ts">
-    const { user } = useUserSession();
     definePageMeta({
         middleware: ['staff']
     })
+    const { user } = useUserSession();
+   
     async function logOut() {
         try {
             await $fetch("/api/auth/logout", {

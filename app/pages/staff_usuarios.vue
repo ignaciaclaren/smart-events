@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { Usuario } from '~/types/usuario';
+    definePageMeta({
+        middleware: ['staff']
+    })
     const { data: usuarios, error } = await useFetch<Usuario[]>('/api/usuarios')
 
 </script>
