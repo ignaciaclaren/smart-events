@@ -5,6 +5,6 @@ import type { Usuario } from '~/types/usuario';
 </script>
 
 <template>
-    <h1 v-if="!error"> Ocurrio un error al obtener los usuarios, intentelo más tarde</h1>
+    <h1 v-if="error"> Ocurrio un error al obtener los usuarios, intentelo más tarde</h1>
     <v-ese UTable :data="usuarios" class="flex-1" />
 </template>
