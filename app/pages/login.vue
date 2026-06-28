@@ -4,16 +4,19 @@
         password: ''
     })
 
+    const { fetch: fetchSession } = useUserSession()
+
     async function login() {
         try{
-        const respuesta = await $fetch("/api/auth/login", {
-            method: 'POST',
-            body:{
-                email: datos.value.email,
-                password: datos.value.password
-            }
-        })
-        console.log(respuesta)
+            await $fetch("/api/auth/login", {
+                method: 'POST',
+                body:{
+                    email: datos.value.email,
+                    password: datos.value.password
+                }
+            })
+            await fetchSession()
+            await navigateTo('/staff')
         }catch(err:any){
             console.error(err)
         }
