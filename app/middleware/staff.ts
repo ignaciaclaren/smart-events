@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware(() => {
     const { user } = useUserSession();
-    if(!user){
+    if(!user.value?.rol){
         throw createError({ statusCode: 403, message: "Acceso Denegado" });
     }
 }) 
