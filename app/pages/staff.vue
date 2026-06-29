@@ -41,7 +41,7 @@
                     Gestionar Usuarios
                 </button>
                 
-                <button @click="navigateTo('/mis_eventos')"
+                <button @click="navigateTo('/staff_eventos')"
                     class="w-full py-4 bg-black border border-gray-700 rounded-xl font-medium hover:border-[color:var(--neon-blue)] hover:text-[color:var(--neon-blue)] transition-all flex justify-center items-center gap-2">
                     Gestionar Eventos
                 </button>
