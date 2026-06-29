@@ -6,7 +6,9 @@ definePageMeta({ middleware: ['staff'] })
 
 const { data: eventos, refresh } = await useFetch<Evento[]>('/api/eventos')
 const mostrarModal = ref(false)
-const fileInput = ref<HTMLInputElement | null>(null)
+
+// Estado para el archivo seleccionado en UFileUpload
+const files = ref<File[]>([])
 
 // Objeto para el formulario
 const form = ref({
@@ -20,11 +22,19 @@ async function guardarEvento() {
   const formData = new FormData()
   
   // Agregar campos de texto
-  Object.entries(form.value).forEach(([key, val]) => formData.append(key, val))
+  Object.entries(form.value).forEach(([key, val]) => {
+    if (val !== null) formData.append(key, String(val))
+  })
   
-  // Agregar archivo
-  if (fileInput.value?.files?.[0]) {
-    formData.append('file', fileInput.value.files[0])
+  // Acceso directo al primer elemento
+  // Muchos componentes de carga no vacían el array, solo cambian el contenido
+  const fileToUpload = Array.isArray(files.value) ? files.value[0] : files.value
+
+  if (fileToUpload instanceof File) {
+    formData.append('file', fileToUpload)
+    console.log("Archivo añadido correctamente:", fileToUpload.name)
+  } else {
+    console.warn("No se detectó un objeto File válido. Se enviará sin imagen.")
   }
 
   await $fetch('/api/eventos', {
@@ -33,8 +43,10 @@ async function guardarEvento() {
   })
 
   mostrarModal.value = false
-  refresh() // Actualiza la tabla automáticamente
+  files.value = [] // Limpiar para el próximo uso
+  refresh()
 }
+
 const columns: TableColumn<Evento>[] = [
     { id: 'titulo', accessorKey: 'titulo', header: 'Título' },
     { id: 'fecha', accessorKey: 'fecha', header: 'Fecha' },
@@ -43,7 +55,6 @@ const columns: TableColumn<Evento>[] = [
     { 
         id: 'imagen', 
         header: 'Imagen',
-        // cell para personalizar el campo imagen
         cell: ({ row }) => {
             const rutaImagen = row.original.imagen 
             return h('img', { 
@@ -70,16 +81,23 @@ const tableMeta = createTableMeta<Evento>()
             :meta="tableMeta"
             class="border rounded-lg" 
         />
-    <div v-if="mostrarModal" class="modal">
-        <h3>Ingrese los datos</h3>
-        <input v-model="form.titulo" type="text" placeholder="titulo">
-        <input v-model="form.fecha" type="date" placeholder="fecha">
-        <input v-model="form.lugar" type="text" placeholder="lugar">
-        <input v-model="form.valor" type="number" placeholder="valor">
-        <input type="file" ref="fileInput">
-        
-        <button @click="guardarEvento">Guardar</button>
-        <button @click="mostrarModal = false">Cancelar</button>
+
+        <div v-if="mostrarModal" class="modal">
+            <h3>Ingrese los datos</h3>
+            <input v-model="form.titulo" type="text" placeholder="titulo">
+            <input v-model="form.fecha" type="date" placeholder="fecha">
+            <input v-model="form.lugar" type="text" placeholder="lugar">
+            <input v-model="form.valor" type="number" placeholder="valor">
+            
+            <UFileUpload 
+              v-model="files" 
+              label="Seleccionar imagen"
+              accept="image/*"
+              :multiple="false"
+            />
+            
+            <button @click="guardarEvento">Guardar</button>
+            <button @click="mostrarModal = false">Cancelar</button>
+        </div>
     </div>
-  </div>
 </template>
