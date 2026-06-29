@@ -18,6 +18,8 @@ const form = ref({
   valor: null
 })
 
+const eventoSeleccionado = ref<Evento | null>(null)
+
 async function guardarEvento() {
   const formData = new FormData()
   
@@ -66,6 +68,22 @@ const columns: TableColumn<Evento>[] = [
     }
 ]
 
+function abrirModalEvento(e: any, row: any){
+   eventoSeleccionado.value = row.original
+}
+
+async function desinscribir(id: number) {
+  try{
+      await $fetch("/api/inscrito/" + id, {
+        method: 'DELETE'
+      })
+      await refresh()
+      eventoSeleccionado.value = null
+  }catch(err){
+    console.error(err)
+  }
+}
+
 const tableMeta = createTableMeta<Evento>()
 </script>
 
@@ -80,6 +98,7 @@ const tableMeta = createTableMeta<Evento>()
             :columns="columns" 
             :meta="tableMeta"
             class="border rounded-lg" 
+            @select="abrirModalEvento"
         />
 
         <div v-if="mostrarModal" class="modal">
@@ -99,5 +118,28 @@ const tableMeta = createTableMeta<Evento>()
             <button @click="guardarEvento">Guardar</button>
             <button @click="mostrarModal = false">Cancelar</button>
         </div>
+    </div>
+
+    <div v-if="eventoSeleccionado">
+      // mostrar los datos del evento (nombre, foto, etc)
+      // mostrar un liostado de los inscritos (eventoSeleccionado.inscritos le haces un. v-for y listo)
+      // boton 
+      <p> {{eventoSeleccionado.titulo}}</p>
+      <p> {{eventoSeleccionado.fecha}}</p>
+      <p> {{eventoSeleccionado.lugar}}</p>
+      <p> {{eventoSeleccionado.valor}}</p>
+      <img width="150" :src="eventoSeleccionado.imagen">
+      <div v-for="inscrito in eventoSeleccionado.inscritos ">
+        <div> 
+          <div style="float: left;">
+            {{ inscrito.nombre }} 
+          </div>
+          <div style="float: right;">
+            <button @click="desinscribir(inscrito.id)">Desinscribir</button>
+          </div>
+        </div>
+        <br>
+      </div>
+      <button>Eliminar evento</button>
     </div>
 </template>
