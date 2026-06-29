@@ -36,7 +36,7 @@
                 <p class="text-gray-400 text-sm mt-2">Inicia sesión para continuar</p>
             </div>
             
-            <form >
+            <div >
                 <input 
                     type="email" 
                     placeholder="Email" 
@@ -48,12 +48,12 @@
                     v-model="datos.password"
                     class="w-full p-4 bg-black border border-gray-700 rounded-xl focus:border-[color:var(--neon-blue)] focus:outline-none transition-all">
                 
-                <button @submit.prevent="login"
+                <button @click="login"
                     type="submit"
                     class="w-full py-4 mt-4 bg-[color:var(--neon-blue)] text-white font-bold rounded-xl hover:opacity-90 transition-all">
                     Entrar
                 </button>
-            </form>
+            </div>
             
         </div>
     </div>
