@@ -4,41 +4,38 @@ import type { Usuario } from '~/types/usuario';
         middleware: ['staff']
     })
     const { data: usuarios, refresh, error } = await useFetch<Usuario[]>('/api/usuarios')
-    const modalAbierto = ref(false)
-    const usuarioBorrar = ref<string | null>(null)
-    const borrandoUsuario = ref(false)
+    const usuarioSeleccionado = ref<Usuario | null> (null)
 
-    function abrirModal(email: string){
-        usuarioBorrar.value = email 
-        modalAbierto.value = true
-
+    function abrirModal(e: any, row: any) {
+        usuarioSeleccionado.value = row.original
     }
 
-    async function consfirmarBorrar() {
-        borrandoUsuario.value = true 
-        try{
-            await $fetch(`/api/usuarios/${usuarioBorrar.value}`,{
-            method: 'DELETE'
-        })
-        modalAbierto.value= false
-        await refresh()
-        }catch(err){
-            console.error(err)
-        }finally {
-        borrandoUsuario.value = false
-        usuarioBorrar.value = null 
+    function solicitaConfirmacion(){
+        const respuesta: boolean = confirm("¿Estás seguro de que deseas continuar?");
+        if (respuesta){
+            confirmarBorrar()
+        }
     }
+
+    async function confirmarBorrar() {
+            try{
+                await $fetch(`/api/usuarios/${usuarioSeleccionado.value?.email}`,{
+                    method: 'DELETE'
+                })
+                await refresh()
+            }catch(err){
+                console.error(err)
+            }
     }
 
 </script>
 
 <template>
     <h1 v-if="error"> Ocurrio un error al obtener los usuarios, intentelo más tarde</h1>
-    <UTable v-else :rows="usuarios" class="flex-1" >
-        <template #actions-data="{ row }">
-            <button @click="abrirModal((row as any).email)">
-                Borrar
-            </button>
-        </template>
+    <UTable v-else :data="usuarios" class="flex-1" @select="abrirModal">
     </UTable>
+    <div v-if="usuarioSeleccionado">
+            <p>Nombre: {{ usuarioSeleccionado.nombre }}</p>
+            <button @click="solicitaConfirmacion"> Eliminar Usuario</button>
+    </div>
 </template>
