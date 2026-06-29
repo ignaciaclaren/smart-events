@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Evento } from '~/types/evento'
+import type { TableColumn } from '@nuxt/ui'
 
 definePageMeta({ middleware: ['staff'] })
 
@@ -34,22 +35,51 @@ async function guardarEvento() {
   mostrarModal.value = false
   refresh() // Actualiza la tabla automáticamente
 }
+const columns: TableColumn<Evento>[] = [
+    { id: 'titulo', accessorKey: 'titulo', header: 'Título' },
+    { id: 'fecha', accessorKey: 'fecha', header: 'Fecha' },
+    { id: 'lugar', accessorKey: 'lugar', header: 'Lugar' },
+    { id: 'valor', accessorKey: 'valor', header: 'Valor' },
+    { 
+        id: 'imagen', 
+        header: 'Imagen',
+        // cell para personalizar el campo imagen
+        cell: ({ row }) => {
+            const rutaImagen = row.original.imagen 
+            return h('img', { 
+                src: rutaImagen, 
+                alt: row.original.titulo,
+                class: 'w-16 h-16 object-cover rounded' 
+            })
+        }
+    }
+]
+
+const tableMeta = createTableMeta<Evento>()
 </script>
 
 <template>
-  <button @click="mostrarModal = true">Agregar evento</button>
+    <button @click="mostrarModal = true">Agregar evento</button>
 
-  <UTable :data="eventos || []" class="flex-1" />
-
-  <div v-if="mostrarModal" class="modal">
-    <h3>Ingrese los datos</h3>
-    <input v-model="form.titulo" type="text" placeholder="titulo">
-    <input v-model="form.fecha" type="date" placeholder="fecha">
-    <input v-model="form.lugar" type="text" placeholder="lugar">
-    <input v-model="form.valor" type="number" placeholder="valor">
-    <input type="file" ref="fileInput">
-    
-    <button @click="guardarEvento">Guardar</button>
-    <button @click="mostrarModal = false">Cancelar</button>
+    <div class="p-6">
+        <h1 class="text-2xl font-bold mb-4">Gestión de Eventos</h1>
+        
+        <UTable 
+            :data="eventos || []" 
+            :columns="columns" 
+            :meta="tableMeta"
+            class="border rounded-lg" 
+        />
+    <div v-if="mostrarModal" class="modal">
+        <h3>Ingrese los datos</h3>
+        <input v-model="form.titulo" type="text" placeholder="titulo">
+        <input v-model="form.fecha" type="date" placeholder="fecha">
+        <input v-model="form.lugar" type="text" placeholder="lugar">
+        <input v-model="form.valor" type="number" placeholder="valor">
+        <input type="file" ref="fileInput">
+        
+        <button @click="guardarEvento">Guardar</button>
+        <button @click="mostrarModal = false">Cancelar</button>
+    </div>
   </div>
 </template>
