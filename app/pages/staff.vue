@@ -9,7 +9,7 @@
             await $fetch("/api/auth/logout", {
                 method: 'POST'
             })
-            await navigateTo('/login')
+            await navigateTo('/')
         } catch(err){
             console.error(err)
         }

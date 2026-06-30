@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+    const { user } = useUserSession();
+
+    if(user.value?.rol){
+        await navigateTo('/staff')
+    }
     const datos = ref({
         email: '',
         password: ''
