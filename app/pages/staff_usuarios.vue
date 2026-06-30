@@ -25,6 +25,12 @@ import type { Usuario } from '~/types/usuario';
                     method: 'DELETE'
                 })
                 await refresh()
+                usuarioSeleccionado.value = null
+                 useToast().add({
+                    duration: 5000,            
+                    title: 'Usuario eliminado con éxito',
+                    color: 'primary',
+                })
             }catch(err){
                 useToast().add({
                     duration: 5000,            
@@ -55,6 +61,11 @@ import type { Usuario } from '~/types/usuario';
             })
             await refresh()
             modalAbierto.value = false
+            useToast().add({
+                duration: 5000,            
+                title: 'Usuario creado con éxito',
+                color: 'primary',
+            })
 
         }catch(err){
             useToast().add({
@@ -116,14 +127,16 @@ import type { Usuario } from '~/types/usuario';
             <div class="mt-8 flex flex-col space-y-3">
                 <input v-model="form.email" placeholder="email" 
                     class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
-                <input v-model="form.password" placeholder="password"
+                <input type="password" v-model="form.password" placeholder="password"
                     class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
                 <input v-model="form.nombre" placeholder="nombre"
                     class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
                 <input v-model="form.apellido" placeholder="apellidos"
                     class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
-                <input v-model="form.rol" placeholder="nombre"
-                    class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+                <select value="staff" class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                </select>
             </div>
             <div class="mt-8 flex flex-col space-y-3">
                 <button @click="agregarUsuario" class="w-full bg-neon-blue text-black font-bold py-3 rounded hover:opacity-80 transition">
