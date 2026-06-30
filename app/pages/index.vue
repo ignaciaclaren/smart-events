@@ -2,16 +2,11 @@
 import type { Evento } from '~/types/evento'
     const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
     const eventoSeleccionado = ref<Evento | null>(null);
-    const modalAbierto= ref(false)
     const datos = ref({
         nombre: '',
         apellido: '',
         email: ''
     })
-    const route = useRoute()
-    const navLinks = [
-        { label: 'Mis Eventos', to: '/mis_eventos' }
-    ]
 
     function abrirModalInscripcion(evento: Evento) {
         eventoSeleccionado.value = evento
@@ -51,11 +46,11 @@ import type { Evento } from '~/types/evento'
 
                 <nav>
                     <NuxtLink to="/mis_eventos" class="rounded-lg px-4 py-2 text-sm font-bold text-neon-blue transition-all duration-400 hover:bg-neon-blue hover:text-neon-bg">
-                    Mis Eventos
+                        Mis Eventos
                     </NuxtLink>
                     <NuxtLink to="/login" class="rounded-lg px-4 py-2 text-sm font-bold text-neon-green border border-neon-green hover:bg-neon-green hover:text-neon-bg transition-all">
                         Staff
-                     </NuxtLink>
+                    </NuxtLink>
                 </nav>
             </div>
         </header>

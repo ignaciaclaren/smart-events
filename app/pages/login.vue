@@ -5,10 +5,6 @@ import { ref } from 'vue';
         password: ''
     })
 
-    definePageMeta({
-        middleware: ['staff']
-    })
-
     const { fetch: fetchSession } = useUserSession()
 
     async function login() {
