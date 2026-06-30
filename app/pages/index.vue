@@ -17,6 +17,14 @@ import type { Evento } from '~/types/evento'
     }
 
     async function inscribir(){
+        if(!datos.value.email || !datos.value.nombre || !datos.value.apellido){
+            useToast().add({
+                duration: 5000,
+                title: 'Todos los datos son obligatorio',
+                color: 'error'
+            })
+            return;
+        }
         try {
             await $fetch('/api/inscrito', {
                 method: 'POST',
@@ -27,13 +35,16 @@ import type { Evento } from '~/types/evento'
                     eventoId: eventoSeleccionado.value?.id, 
                 }
             })
-            alert("inscrito con exito!")
+            useToast().add({
+                duration: 5000,
+                title: 'Inscrito con éxito!',
+                color: 'primary'
+            })
             cerrarModalInscripccion()
             await refresh()
         }catch (err: any) {
             useToast().add({
                 duration: 5000,
-                icon: 'i-lucide-lock',
                 title: 'Error al inscribir',
                 color: 'error'
             })

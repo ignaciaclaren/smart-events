@@ -4,7 +4,7 @@
 
     async function buscarEventos() {
         const { data, error } = await useFetch('/api/inscrito?email='+email.value)
-        if (error){
+        if (error.value){
              useToast().add({
                 duration: 5000,
                 title: 'Ocurrió un error al consultar los eventos',
