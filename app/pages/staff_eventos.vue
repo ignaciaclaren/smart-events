@@ -151,7 +151,7 @@ function abrirModalAgregar() {
                 <input v-model="form.titulo" type="text" placeholder="titulo"
                   class="bg-black border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">
                 <input v-model="form.fecha" type="date" placeholder="fecha"
-                  class="bg-black border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">
+                  class="font-gray-200 border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">
                 <input v-model="form.lugar" type="text" placeholder="lugar"
                   class="bg-black border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">
                 <input v-model="form.valor" type="number" placeholder="valor"
@@ -174,8 +174,6 @@ function abrirModalAgregar() {
               </div>
             </div>
           </div>
-
-
           
         </div>
     </div>
@@ -194,10 +192,10 @@ function abrirModalAgregar() {
               class="rounded-lg border border-gray-700"
           >
           <div>
-            <p> {{eventoSeleccionado.titulo}}</p>
-            <p> {{eventoSeleccionado.fecha}}</p>
-            <p> {{eventoSeleccionado.lugar}}</p>
-            <p> {{eventoSeleccionado.valor}}</p>
+            <p class="font font-bold text-white">Evento: {{eventoSeleccionado.titulo}}</p>
+            <p class="font font-bold text-white">Fecha: {{ formatDate(eventoSeleccionado.fecha.toString()) }}</p>
+            <p class="font font-bold text-white">Lugar: {{eventoSeleccionado.lugar}}</p>
+            <p class="font font-bold text-white mt-2">Valor: {{eventoSeleccionado.valor}}</p>
           </div>
         </div>
 

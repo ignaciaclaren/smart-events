@@ -78,7 +78,7 @@ import type { Evento } from '~/types/evento'
                         {{evento.titulo}}
                         </h2>
                         <div class="text-gray-400 space-y-1 mb-4">
-                            <p>fecha: {{evento.fecha}} </p>
+                            <p>fecha: {{formatDate(evento.fecha.toString())}} </p>
                             <p>lugar: {{evento.lugar}} </p>
                             <p>inscritos: {{evento.inscritos.length}} </p>
                         </div>

@@ -7,8 +7,6 @@
         console.log(data)
         listadoEventos.value = data.value
     }
-    const modalAbierto = ref(false)
-
 </script>
 <template>
      <header class="border-b border-neon-blue bg-neon-bg">
@@ -28,14 +26,23 @@
         </button>
         
         <div class="space-y-4">
+            <h3 class="text-white text-lg"> Ingrese su email: </h3>
             <input type="text" v-model="email" placeholder="email" 
             class="w-full bg-neon-bg border border-neon-blue rounded px-3 py-2 text-white">
             
             <div v-if="listadoEventos" class="w-full mt-8">
                 <h2 class="text-neon-blue font-bold text-xl mb-4">Tus eventos:</h2>
-                <div v-for="evento in listadoEventos" :key="evento.id" 
-                     class="bg-gray-800 p-4 border border-neon-blue/20 rounded-xl mb-2 text-white">
-                    <p class="font-bold">{{ evento?.evento?.titulo }}</p>
+
+                <div v-for="evento in listadoEventos" :key="evento.id"
+                     class="flex items-start gap-4 bg-gray-800 p-4 border border-neon-blue/20 rounded-xl mb-4 text-white">
+
+                     <img :src="evento.evento?.imagen" alt="Evento" class="w-32 h-24 object-cover rounded-lg">
+                     <div class="flex flex-col items-start text-left">
+                        <h3 class="text-lg font-bold text-white">{{ evento.evento?.titulo }}</h3>
+                        <p class="font-bold"> Fecha:    {{ formatDate(evento.evento?.fecha)}}</p>
+                        <p class="font-bold"> Lugar:    {{ evento?.evento?.lugar }}</p>
+                        <p class="font-bold mt-2"> Valor:    {{ evento?.evento?.valor }}</p>
+                    </div>
                 </div>                              
             </div>
             
