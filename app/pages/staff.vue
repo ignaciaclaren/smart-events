@@ -17,6 +17,19 @@
 </script>
 
 <template>
+    <header class="border-b border-neon-blue bg-neon-bg">
+            <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+                <NuxtLink to = "/" class="text-xl font-black text-neon-blue ">
+                    Smart Events
+                </NuxtLink>
+
+                <nav>
+                    <NuxtLink to="/login" class="rounded-lg px-4 py-2 text-sm font-bold text-neon-green border border-neon-green hover:bg-neon-green hover:text-neon-bg transition-all">
+                        Staff
+                     </NuxtLink>
+                </nav>
+            </div>
+        </header>
     <div class="min-h-screen bg-[color:var(--neon-bg)] text-white flex flex-col items-center justify-center p-6">
         
         <div class="w-full max-w-lg bg-[#111113] border border-gray-800 rounded-2xl p-8 shadow-2xl">

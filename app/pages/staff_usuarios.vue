@@ -3,12 +3,15 @@ import type { Usuario } from '~/types/usuario';
     definePageMeta({
         middleware: ['staff']
     })
+    const modalAbierto = ref(false)
     const { data: usuarios, refresh, error } = await useFetch<Usuario[]>('/api/usuarios')
     const usuarioSeleccionado = ref<Usuario | null> (null)
 
     function abrirModal(e: any, row: any) {
         usuarioSeleccionado.value = row.original
     }
+
+    const modalBorrarAbierto = ref(false)
 
     function solicitaConfirmacion(){
         const respuesta: boolean = confirm("¿Estás seguro de que deseas continuar?");
@@ -28,14 +31,99 @@ import type { Usuario } from '~/types/usuario';
             }
     }
 
+    const form = ref({
+        email: '',
+        password: '',
+        nombre: '',
+        apellido: '',
+        rol: 'staff'
+    })
+
+    function abrirModalAgregar() {
+         modalAbierto.value = true
+}
+
+    async function agregarUsuario() {
+        console.log("Datos que se envían:", form.value)
+        try{
+            await $fetch("/api/usuarios",{
+                method: 'POST',
+                body: form.value
+            })
+            await refresh()
+            modalAbierto.value = false
+        }catch(err){
+            console.error(err)
+        }
+    }
+
 </script>
 
 <template>
+    <header class="border-b border-neon-blue bg-neon-bg">
+            <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+                <NuxtLink to = "/" class="text-xl font-black text-neon-blue ">
+                    Smart Events
+                </NuxtLink>
+
+                <nav>
+                    <NuxtLink to="/staff" class="rounded-lg px-4 py-2 text-sm font-bold text-neon-green border border-neon-green hover:bg-neon-green hover:text-neon-bg transition-all">
+                        Staff
+                     </NuxtLink>
+                </nav>
+            </div>
+        </header>
     <h1 v-if="error"> Ocurrio un error al obtener los usuarios, intentelo más tarde</h1>
     <UTable v-else :data="usuarios" class="flex-1" @select="abrirModal">
     </UTable>
-    <div v-if="usuarioSeleccionado">
-            <p>Nombre: {{ usuarioSeleccionado.nombre }}</p>
-            <button @click="solicitaConfirmacion"> Eliminar Usuario</button>
+
+    
+    <div v-if="usuarioSeleccionado" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+        <div class="bg-neon-bg border border-neon-blue p-8 rounded-2xl w-full max-w-sm shadow-2xl">
+            <h3 class="text-white text-xl font-bold mb-4 text-center">Eliminar Ususario</h3>
+            <p class="font-bold"> Nombre: {{ usuarioSeleccionado.nombre }}</p>
+            <div class="flex flex-col space-y-5">
+                <button @click="solicitaConfirmacion" class="w-full bg-red-600 text-white font-bold py-3 rounded hover:bg-red-700 transition mt-5">
+                     Eliminar</button>
+                <button @click="usuarioSeleccionado = null" class="w-full bg-gray-900 text-gray-400 hover:text-white py-2 rounded transition">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="flex justify-center my-8">
+        <button @click="abrirModalAgregar" class="bg-neon-bg border-2 border-neon-blue text-neon-blue font-bold px-8 py-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-neon-blue hover:text-black ">
+            Agregar Usuario
+        </button>
+    </div>
+    <div v-if="modalAbierto" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+        <div class="bg-neon-bg border border-neon-blue p-8 rounded-2xl w-full max-w-md shadow-2xl">
+            <h3 class="text-white text-xl font-bold mb-6 text-center">
+                Nuevo usuario
+            </h3>
+            <div class="mt-8 flex flex-col space-y-3">
+                <input v-model="form.email" placeholder="email" 
+                    class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+                <input v-model="form.password" placeholder="password"
+                    class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+                <input v-model="form.nombre" placeholder="nombre"
+                    class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+                <input v-model="form.apellido" placeholder="apellidos"
+                    class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+                <input v-model="form.rol" placeholder="nombre"
+                    class="bg-black border border-gray-700 p-3 rounded text-white focus:border-neon-blue outline-none transition">
+            </div>
+            <div class="mt-8 flex flex-col space-y-3">
+                <button @click="agregarUsuario" class="w-full bg-neon-blue text-black font-bold py-3 rounded hover:opacity-80 transition">
+                    Guardar
+                </button>
+                <button @click="modalAbierto = false" class="w-full bg-gray-900 text-gray-400 hover:text-white rrounded hover:opacity-80 transition py-2">
+                    Cancelar
+                </button>
+            </div>
+        </div>
     </div>
 </template>
