@@ -52,7 +52,15 @@ async function guardarEvento() {
 
 const columns: TableColumn<Evento>[] = [
     { id: 'titulo', accessorKey: 'titulo', header: 'Título' },
-    { id: 'fecha', accessorKey: 'fecha', header: 'Fecha' },
+    { 
+        id: 'fecha', 
+        accessorKey: 'fecha', 
+        header: 'Fecha',
+        cell: ({ row }) => {
+            const fechaOriginal = row.original.fecha;
+            return formatDate(fechaOriginal.toString());
+        }
+    },
     { id: 'lugar', accessorKey: 'lugar', header: 'Lugar' },
     { id: 'valor', accessorKey: 'valor', header: 'Valor' },
     { 
