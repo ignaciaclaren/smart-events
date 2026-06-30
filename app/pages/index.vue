@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Evento } from '~/types/evento'
-    const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
+    const { data: eventos,  error, refresh } = await useFetch<Evento[]>('/api/eventos')
     const eventoSeleccionado = ref<Evento | null>(null);
     const datos = ref({
         nombre: '',
@@ -31,7 +31,12 @@ import type { Evento } from '~/types/evento'
             cerrarModalInscripccion()
             await refresh()
         }catch (err: any) {
-            console.error(err)
+            useToast().add({
+                duration: 5000,
+                icon: 'i-lucide-lock',
+                title: 'Error al inscribir',
+                color: 'error'
+            })
         }
     }
 </script>
@@ -60,8 +65,10 @@ import type { Evento } from '~/types/evento'
             
             <div class="min-h-screen bg-black/70 p-6">
                 <h1 class="text-white text-center text-5xl font-black py-10">EVENTOS</h1>   
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto max-w-6xl p-6">
+                <div v-if="error" class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto max-w-6xl p-6">
+                    Ocurrió un error al cargar los eventos, por favor inténtalo más tarde
+                </div>
+                <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto max-w-6xl p-6">
                     
                     <div v-for="evento in eventos" 
                         class="border border-neon-blue/30 rounded-xl p-4 bg-neon-bg shadow-lg hover:border-neon-blue transition-all">

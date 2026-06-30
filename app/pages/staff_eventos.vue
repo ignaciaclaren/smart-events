@@ -4,7 +4,7 @@ import type { TableColumn } from '@nuxt/ui'
 
 definePageMeta({ middleware: ['staff'] })
 
-const { data: eventos, refresh } = await useFetch<Evento[]>('/api/eventos')
+const { data: eventos, refresh, error } = await useFetch<Evento[]>('/api/eventos')
 const mostrarModal = ref(false)
 
 // Estado para el archivo seleccionado en UFileUpload
@@ -39,11 +39,6 @@ async function guardarEvento() {
   } else {
     console.warn("No se detectó un objeto File válido. Se enviará sin imagen.")
   }
-
-  await $fetch('/api/eventos', {
-    method: 'POST',
-    body: formData
-  })
 
   mostrarModal.value = false
   files.value = [] 
@@ -89,7 +84,11 @@ async function desinscribir(id: number) {
       await refresh()
       eventoSeleccionado.value = null
   }catch(err){
-    console.error(err)
+    useToast().add({
+         duration: 5000,
+         title: 'Error al desinscribir',
+         color: 'error'
+      })
   }
 }
 
@@ -101,7 +100,11 @@ async function eliminarEvento(id: number) {
     await refresh()
     eventoSeleccionado.value = null
   }catch(err){
-    console.error(err)
+    useToast().add({
+         duration: 5000,
+         title: 'Error al eliminar el evento',
+         color: 'error'
+      })
   }
   
 }
@@ -144,8 +147,8 @@ function abrirModalAgregar() {
     <div>
       <div class="p-6">
           <h1 class="text-2xl font-bold mb-4">Gestión de Eventos</h1>
-          
-          <UTable 
+          <h1 v-if="error">Ocurrio un error al cargar los eventos</h1>
+          <UTable v-else
               :data="eventos || []" 
               :columns="columns" 
               :meta="tableMeta"

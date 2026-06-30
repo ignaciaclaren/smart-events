@@ -11,7 +11,11 @@
             })
             await navigateTo('/')
         } catch(err){
-            console.error(err)
+            useToast().add({
+                duration: 5000,
+                title: 'No se pudo cerrar la sesión',
+                color: 'error'
+            })
         }
     }
 </script>

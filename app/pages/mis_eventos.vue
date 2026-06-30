@@ -3,9 +3,17 @@
     const listadoEventos = ref<any>()
 
     async function buscarEventos() {
-        const { data } = await useFetch('/api/inscrito?email='+email.value)
-        console.log(data)
-        listadoEventos.value = data.value
+        const { data, error } = await useFetch('/api/inscrito?email='+email.value)
+        if (error){
+             useToast().add({
+                duration: 5000,
+                title: 'Ocurrió un error al consultar los eventos',
+                color: 'error'
+            })
+        }else{
+            listadoEventos.value = data.value
+        }
+        
     }
 </script>
 <template>

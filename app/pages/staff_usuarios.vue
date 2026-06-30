@@ -5,13 +5,12 @@ import type { Usuario } from '~/types/usuario';
     })
     const modalAbierto = ref(false)
     const { data: usuarios, refresh, error } = await useFetch<Usuario[]>('/api/usuarios')
+    
     const usuarioSeleccionado = ref<Usuario | null> (null)
 
     function abrirModal(e: any, row: any) {
         usuarioSeleccionado.value = row.original
     }
-
-    const modalBorrarAbierto = ref(false)
 
     function solicitaConfirmacion(){
         const respuesta: boolean = confirm("¿Estás seguro de que deseas continuar?");
@@ -27,7 +26,11 @@ import type { Usuario } from '~/types/usuario';
                 })
                 await refresh()
             }catch(err){
-                console.error(err)
+                useToast().add({
+                    duration: 5000,            
+                    title: 'Ocurrió un error al borrar el usuario',
+                    color: 'error',
+                })
             }
     }
 
@@ -52,8 +55,13 @@ import type { Usuario } from '~/types/usuario';
             })
             await refresh()
             modalAbierto.value = false
+
         }catch(err){
-            console.error(err)
+            useToast().add({
+                duration: 5000,
+                title: 'Error al agregar el usuario',
+                color: 'error'
+            })
         }
     }
 
@@ -73,6 +81,7 @@ import type { Usuario } from '~/types/usuario';
                 </nav>
             </div>
         </header>
+        
     <h1 v-if="error"> Ocurrio un error al obtener los usuarios, intentelo más tarde</h1>
     <UTable v-else :data="usuarios" class="flex-1" @select="abrirModal">
     </UTable>

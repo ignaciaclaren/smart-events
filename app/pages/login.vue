@@ -24,7 +24,11 @@ import { ref } from 'vue';
             await fetchSession()
             await navigateTo('/staff')
         }catch(err:any){
-            console.error(err)
+            useToast().add({
+                duration: 5000,
+                title: 'Error al iniciar sesión',
+                color: 'error'
+            })
         }
     }
 </script>
