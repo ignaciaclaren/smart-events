@@ -84,6 +84,19 @@ async function desinscribir(id: number) {
   }
 }
 
+async function eliminarEvento(id: number) {
+  try{
+    await $fetch("/api/eventos/" + id,{
+      method: 'DELETE'
+    })
+    await refresh()
+    eventoSeleccionado.value = null
+  }catch(err){
+    console.error(err)
+  }
+  
+}
+
 const tableMeta = createTableMeta<Evento>()
 </script>
 
@@ -140,6 +153,6 @@ const tableMeta = createTableMeta<Evento>()
         </div>
         <br>
       </div>
-      <button>Eliminar evento</button>
+      <button @click="eliminarEvento(eventoSeleccionado.id)">Eliminar evento</button>
     </div>
 </template>
