@@ -12,12 +12,8 @@ npm install
 npx prisma generate
 ```
 
-## Entorno de desarrollo
-Crear un env con estas dos variables:
+Importar BD en mysql (web.sql)
 
-DATABASE_URL="mysql://root@localhost:3306/web"
-
-NUXT_SESSION_PASSWORD=
 
 ## Development Server
 

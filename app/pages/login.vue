@@ -19,6 +19,7 @@ import { ref } from 'vue';
                 title: 'Deebe rellenar todos los datos',
                 color: 'error'
             })
+            return
         }
         try{
             await $fetch("/api/auth/login", {
