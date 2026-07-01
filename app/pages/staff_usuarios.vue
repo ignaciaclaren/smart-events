@@ -49,6 +49,13 @@ import type { Usuario } from '~/types/usuario';
         rol: 'staff'
     })
 
+    function limpiarForm(){
+        form.value.email = ''
+        form.value.password =''
+        form.value.nombre=''
+        form.value.apellido=''
+    }
+
     function abrirModalAgregar() {
          modalAbierto.value = true
 }
@@ -74,7 +81,7 @@ import type { Usuario } from '~/types/usuario';
                 title: 'Usuario creado con éxito',
                 color: 'primary',
             })
-
+            limpiarForm()
         }catch(err){
             useToast().add({
                 duration: 5000,
@@ -155,7 +162,7 @@ import type { Usuario } from '~/types/usuario';
                 <button @click="agregarUsuario" class="w-full bg-neon-blue text-black font-bold py-3 rounded hover:opacity-80 transition">
                     Guardar
                 </button>
-                <button @click="modalAbierto = false" class="w-full bg-gray-900 text-gray-400 hover:text-white rrounded hover:opacity-80 transition py-2">
+                <button @click="()=>{modalAbierto = false ; limpiarForm()}" class="w-full bg-gray-900 text-gray-400 hover:text-white rrounded hover:opacity-80 transition py-2">
                     Cancelar
                 </button>
             </div>
