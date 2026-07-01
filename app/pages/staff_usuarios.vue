@@ -16,6 +16,7 @@ import type { Usuario } from '~/types/usuario';
         const respuesta: boolean = confirm("¿Estás seguro de que deseas continuar?");
         if (respuesta){
             confirmarBorrar()
+            usuarioSeleccionado.value = null;
         }
     }
 
@@ -107,13 +108,18 @@ import type { Usuario } from '~/types/usuario';
     
     <div v-if="usuarioSeleccionado" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
         <div class="bg-neon-bg border border-neon-blue p-8 rounded-2xl w-full max-w-sm shadow-2xl">
-            <h3 class="text-white text-xl font-bold mb-4 text-center">Eliminar Ususario</h3>
-            <p class="font-bold"> Nombre: {{ usuarioSeleccionado.nombre }}</p>
-            <div class="flex flex-col space-y-5">
-                <button @click="solicitaConfirmacion" class="w-full bg-red-600 text-white font-bold py-3 rounded hover:bg-red-700 transition mt-5">
-                     Eliminar</button>
-                <button @click="usuarioSeleccionado = null" class="w-full bg-gray-900 text-gray-400 hover:text-white py-2 rounded transition">
-                    Cancelar
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-neon-blue">{{ usuarioSeleccionado.nombre }} {{ usuarioSeleccionado.apellido }}</h3>
+                    <button @click="usuarioSeleccionado = null" class="text-gray-400 hover:text-white">✕</button>
+            </div>
+            <div class="space-y-2 mb-6">
+                <p class="font-bold">Email: {{ usuarioSeleccionado.email }}</p>
+            </div>
+            <div class="flex flex-col space-y-3">
+                <button 
+                    @click="solicitaConfirmacion" 
+                    class="bg-[#1f2937] hover:bg-red-900 text-white font-bold px-4 py-2 rounded transition-colors duration-200 shadow-md self-start">
+                    Eliminar
                 </button>
             </div>
         </div>
