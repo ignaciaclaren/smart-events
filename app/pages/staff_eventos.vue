@@ -22,23 +22,48 @@ const form = ref({
 const eventoSeleccionado = ref<Evento | null>(null)
 
 async function guardarEvento() {
+
+  if (!form.value.fecha || !form.value.titulo || !form.value.lugar || !form.value.valor){
+    useToast().add({
+         duration: 5000,
+         title: 'Deebe llenar todos los datos',
+         color: 'error'
+      })
+      return;
+  }
+  
   const formData = new FormData()
   
   // Agregar campos de texto
   Object.entries(form.value).forEach(([key, val]) => {
     if (val !== null) formData.append(key, String(val))
   })
-  
-  // Acceso directo al primer elemento
-  // Muchos componentes de carga no vacían el array, solo cambian el contenido
   const fileToUpload = Array.isArray(files.value) ? files.value[0] : files.value
 
   if (fileToUpload instanceof File) {
     formData.append('file', fileToUpload)
-    console.log("Archivo añadido correctamente:", fileToUpload.name)
   } else {
     console.warn("No se detectó un objeto File válido. Se enviará sin imagen.")
   }
+
+  try {
+    await $fetch('/api/eventos', {
+      method: 'POST',
+      body: formData
+    })
+    useToast().add({
+      duration: 5000,
+      title: 'Evento creado con éxito',
+      color: 'primary'
+    })
+  }catch{
+     useToast().add({
+         duration: 5000,
+         title: 'Error al guardar el evento',
+         color: 'error'
+      })
+  }
+  
 
   mostrarModal.value = false
   files.value = [] 
@@ -113,16 +138,6 @@ const imagenEvento = computed(() => {
 })
 
 const tableMeta = createTableMeta<Evento>()
-function abrirModalAgregar() {
-  form.value = {
-    titulo: '',
-    fecha: '',
-    lugar: '',
-    valor: null
-  }
-  files.value = [] 
-  mostrarModal.value = true
-}
 
 </script>
 

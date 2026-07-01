@@ -3,6 +3,14 @@
     const listadoEventos = ref<any>()
 
     async function buscarEventos() {
+        if(!email.value){
+            useToast().add({
+                duration: 5000,
+                title: 'Debe ingresar un email',
+                color: 'error'
+            })
+            return;
+        }
         const { data, error } = await useFetch('/api/inscrito?email='+email.value)
         if (error.value){
              useToast().add({

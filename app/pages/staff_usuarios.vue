@@ -53,7 +53,14 @@ import type { Usuario } from '~/types/usuario';
 }
 
     async function agregarUsuario() {
-        console.log("Datos que se envían:", form.value)
+        if(!form.value.email || !form.value.password || !form.value.nombre || !form.value.apellido){
+            useToast().add({
+                duration: 5000,            
+                title: 'Debe ingresar todos los datos',
+                color: 'error',
+            })
+            return;
+        }
         try{
             await $fetch("/api/usuarios",{
                 method: 'POST',

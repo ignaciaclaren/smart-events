@@ -13,6 +13,13 @@ import { ref } from 'vue';
     const { fetch: fetchSession } = useUserSession()
 
     async function login() {
+        if(!datos.value.email|| !datos.value.password){
+            useToast().add({
+                duration: 5000,
+                title: 'Deebe rellenar todos los datos',
+                color: 'error'
+            })
+        }
         try{
             await $fetch("/api/auth/login", {
                 method: 'POST',
