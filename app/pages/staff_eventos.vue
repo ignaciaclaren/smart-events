@@ -7,6 +7,9 @@ definePageMeta({ middleware: ['staff'] })
 const { data: eventos, refresh, error } = await useFetch<Evento[]>('/api/eventos')
 const mostrarModal = ref(false)
 
+const { user } = useUserSession();
+
+
 // Estado para el archivo seleccionado en UFileUpload
 const files = ref<File[]>([])
 
@@ -159,6 +162,10 @@ const tableMeta = createTableMeta<Evento>()
         Staff
        </NuxtLink>
      </nav> 
+
+      <nav>
+        {{user?.nombre}} {{user?.apellido}}
+      </nav>
     </div>
   </header>
 

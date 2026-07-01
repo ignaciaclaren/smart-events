@@ -3,6 +3,8 @@ import type { Usuario } from '~/types/usuario';
     definePageMeta({
         middleware: ['staff']
     })
+    const { user } = useUserSession();
+
     const modalAbierto = ref(false)
     const { data: usuarios, refresh, error } = await useFetch<Usuario[]>('/api/usuarios')
     
@@ -104,6 +106,10 @@ import type { Usuario } from '~/types/usuario';
                     <NuxtLink to="/staff" class="rounded-lg px-4 py-2 text-sm font-bold text-neon-green border border-neon-green hover:bg-neon-green hover:text-neon-bg transition-all">
                         Staff
                      </NuxtLink>
+                </nav>
+
+                 <nav>
+                    {{user?.nombre}} {{user?.apellido}}
                 </nav>
             </div>
         </header>

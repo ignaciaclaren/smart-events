@@ -33,6 +33,10 @@
                         Staff
                      </NuxtLink>
                 </nav>
+
+                <nav>
+                    {{user?.nombre}} {{user?.apellido}}
+                </nav>
             </div>
         </header>
     <div class="min-h-screen bg-[color:var(--neon-bg)] text-white flex flex-col items-center justify-center p-6">
