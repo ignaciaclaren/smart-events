@@ -24,4 +24,3 @@ logs
 !.env.example
 
 /app/generated/prisma
-/public/uploads
