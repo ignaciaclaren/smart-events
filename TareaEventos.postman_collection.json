@@ -1,0 +1,343 @@
+{
+  "info": {
+    "_postman_id": "19cbad90-5c1f-4822-9542-dfb2397a7fb4",
+    "name": "TareaEventos",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55890659",
+    "_collection_link": "https://go.postman.co/collection/55890659-19cbad90-5c1f-4822-9542-dfb2397a7fb4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get eventos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/eventos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "eventos"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "Post inscrito",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"neyjr@gmail.com\",\n    \"nombre\": \"neymar\",\n    \"apellido\": \"da Silva Santos\",\n    \"eventoId\": 3\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/inscrito",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "inscrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get inscrito",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/inscrito",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "inscrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get usuario",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/usuarios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post usuario",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\n    {\n    \"email\": \"jMouri@gmail.com\",\n    \"password\": \"01\",\n    \"nombre\": \"jose\",\n    \"apellido\": \"Mourinho\",\n    \"rol\": \"dt\"\n    }\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/usuarios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get inscrio por usuario",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/inscrito?email=cr7@gmail.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "inscrito"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "cr7@gmail.com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"viniJr@gmail.com\",\n    \"password\": \"03\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete usuario",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\n    {\n    \"email\": \"viniJr@gmail.com\",\n    \"password\": \"03\",\n    \"nombre\": \"josvinie\",\n    \"apellido\": \"jr\",\n    \"rol\": \"jd\"\n    }\n"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/usuarios/anceloti@gmail.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "usuarios",
+            "anceloti@gmail.com"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete evento",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\n    {\n    \"email\": \"viniJr@gmail.com\",\n    \"password\": \"03\",\n    \"nombre\": \"josvinie\",\n    \"apellido\": \"jr\",\n    \"rol\": \"jd\"\n    }\n"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/eventos/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "eventos",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get inscritos en evento",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/eventos/3/inscritos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "eventos",
+            "3",
+            "inscritos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete inscriito",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/inscrito/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "inscrito",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
