@@ -31,11 +31,19 @@ export default defineEventHandler(async (event) => {
     relativePath = `/uploads/${fileName}`
   }
 
+  let valorEvento = -1
+  try{
+    const valorEvento = Number(bodyData.valor)
+    if (valorEvento < 0) throw createError({ statusCode: 400, message: 'Valor debe ser mayor a cero' })
+  }catch{
+    throw createError({ statusCode: 400, message: 'Valor inválido' })
+  }
+
   return await prisma.evento.create({
     data: {
-      titulo: bodyData.titulo,
-      lugar: bodyData.lugar,
-      valor: Number(bodyData.valor),
+      titulo: bodyData.titulo.toUpperCase().trim(),
+      lugar: bodyData.lugar.toUpperCase().trim(),
+      valor: valorEvento,
       fecha: new Date(bodyData.fecha),
       imagen: relativePath // Si no hubo archivo, enviará '/uploads/defecto.jpeg'
     }

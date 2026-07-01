@@ -18,6 +18,12 @@ const form = ref({
   valor: null
 })
 
+function limpiarForm(){
+  form.value.titulo = ''
+  form.value.fecha = ''
+  form.value.lugar = ''
+  form.value.valor = null
+}
 
 const eventoSeleccionado = ref<Evento | null>(null)
 
@@ -56,6 +62,7 @@ async function guardarEvento() {
       title: 'Evento creado con éxito',
       color: 'primary'
     })
+    limpiarForm()
   }catch{
      useToast().add({
          duration: 5000,
@@ -195,7 +202,7 @@ const tableMeta = createTableMeta<Evento>()
               <div class="flex gap-4 mt-8">
                 <button @click="guardarEvento" class="flex-1 bg-neon-blue text-black font-bold py-3 rounded-lg hover:bg-neon-green transition-colors">
                   Guardar</button>
-                <button @click="mostrarModal = false" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition-colors">
+                <button @click="()=>{mostrarModal = false; limpiarForm()}" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition-colors">
                   Cancelar</button>
               </div>
             </div>
