@@ -42,6 +42,7 @@ import type { Evento } from '~/types/evento'
             })
             cerrarModalInscripccion()
             await refresh()
+            limpiarForm()
         }catch (err: any) {
             useToast().add({
                 duration: 5000,
@@ -49,6 +50,12 @@ import type { Evento } from '~/types/evento'
                 color: 'error'
             })
         }
+    }
+
+    function limpiarForm(){
+        datos.value.email = ''
+        datos.value.nombre = ''
+        datos.value.apellido = ''
     }
 </script>
 <template>
@@ -71,35 +78,41 @@ import type { Evento } from '~/types/evento'
             </div>
         </header>
 
-        <div class="min-h-screen bg-cover bg-center bg-fixed" 
-            style="background-image: url('/uploads/fondoEvento.jpg');"> 
+        <div class="min-h-screen bg-cover bg-center bg-fixed"> 
             
             <div class="min-h-screen bg-black/70 p-6">
-                <h1 class="text-white text-center text-5xl font-black py-10">EVENTOS</h1>   
+                <h1 class="text-white text-center text-5xl font-black py-10">HOLONET EVENTS</h1>   
                 <div v-if="error" class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto max-w-6xl p-6">
                     Ocurrió un error al cargar los eventos, por favor inténtalo más tarde
                 </div>
                 <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto max-w-6xl p-6">
                     
                     <div v-for="evento in eventos" 
-                        class="border border-neon-blue/30 rounded-xl p-4 bg-neon-bg shadow-lg hover:border-neon-blue transition-all">
-                        <div class="w-full h-40 bg-gray-800">
-                            <img :src="evento.imagen" :alt="evento.titulo" 
-                                class="w-full h-full object-cover">
+                        class="border border-neon-blue/30 rounded-xl p-4 bg-neon-bg shadow-lg hover:border-neon-blue transition-all flex flex-col h-full">
+                       
+                        <div class="flex-grow">
+                            <div class="w-full h-40 bg-gray-800">
+                                <img :src="evento.imagen" :alt="evento.titulo" 
+                                    class="w-full h-full object-cover">
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-neon-blue mb-6 mt-4">
+                            {{evento.titulo}}
+                            </h2>
+                            <div class="text-gray-400 space-y-1 mb-4 flex-grow">
+                                <p>fecha: {{formatDate(evento.fecha.toString())}} </p>
+                                <p>lugar: {{evento.lugar}} </p>
+                                <p>inscritos: {{evento.inscritos.length}} </p>
+                            </div>
                         </div>
-                        <h2 class="text-2xl font-bold text-neon-blue mb-6 mt-4">
-                        {{evento.titulo}}
-                        </h2>
-                        <div class="text-gray-400 space-y-1 mb-4">
-                            <p>fecha: {{formatDate(evento.fecha.toString())}} </p>
-                            <p>lugar: {{evento.lugar}} </p>
-                            <p>inscritos: {{evento.inscritos.length}} </p>
+
+                        <div class="mt-4">
+                            <b class="font-bold text-white block mb-2">valor: {{evento.valor}} creditos</b>
+                            <button @click="abrirModalInscripcion(evento)" 
+                                class="w-full bg-neon-blue text-neon-bg font-bold px-4 py-2 rounded-lg hover:bg-neon-green transition-colors">
+                                Inscribirse
+                            </button>
                         </div>
-                        <b class="font-bold text-white">valor:  {{evento.valor}} </b>
-                        <button @click="abrirModalInscripcion(evento)" 
-                            class="mt-3 w-full bg-neon-blue text-neon-bg font-bold px-4 py-2 rounded-lg hover:bg-neon-green transition-colors p-10 mb-6">
-                            Inscribirse
-                        </button>
                     </div>
                 </div>
             </div>
@@ -120,7 +133,7 @@ import type { Evento } from '~/types/evento'
                         <div class="mt-8 flex flex-col space-y-2">   
                             <button @click="inscribir" class="w-full bg-blue-500 hover:bg-blue-900 text-white font-bold py-3 rounded-lg transition duration-300">
                                 Confirmar Inscripción</button>
-                            <button @click="eventoSeleccionado = null" class="w-full bg-gray-900 hover:bg-black border border-blue-900 text-white font-bold py-3 rounded-lg transition duration-500">
+                            <button @click="()=>{eventoSeleccionado = null; limpiarForm()}" class="w-full bg-gray-900 hover:bg-black border border-blue-900 text-white font-bold py-3 rounded-lg transition duration-500">
                                 Cancelar</button>                                                                        
                         </div> 
                     </div>

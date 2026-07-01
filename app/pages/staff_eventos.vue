@@ -228,7 +228,7 @@ const tableMeta = createTableMeta<Evento>()
             <p class="font font-bold text-white">Evento: {{eventoSeleccionado.titulo}}</p>
             <p class="font font-bold text-white">Fecha: {{ formatDate(eventoSeleccionado.fecha.toString()) }}</p>
             <p class="font font-bold text-white">Lugar: {{eventoSeleccionado.lugar}}</p>
-            <p class="font font-bold text-white mt-2">Valor: {{eventoSeleccionado.valor}}</p>
+            <p class="font font-bold text-white mt-2">Valor: {{eventoSeleccionado.valor}} creditos</p>
           </div>
         </div>
 
