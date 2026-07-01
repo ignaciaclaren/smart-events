@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
   let valorEvento = -1
   try{
-    const valorEvento = Number(bodyData.valor)
+    valorEvento = Number(bodyData.valor)
     if (valorEvento < 0) throw createError({ statusCode: 400, message: 'Valor debe ser mayor a cero' })
   }catch{
     throw createError({ statusCode: 400, message: 'Valor inválido' })
