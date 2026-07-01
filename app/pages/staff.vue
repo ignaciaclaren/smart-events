@@ -9,7 +9,8 @@
             await $fetch("/api/auth/logout", {
                 method: 'POST'
             })
-            await navigateTo('/')
+            // acá redirijo al home pero recargando los datos del navegador
+            window.location.href = "/"
         } catch(err){
             useToast().add({
                 duration: 5000,
