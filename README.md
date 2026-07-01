@@ -16,6 +16,7 @@ npx prisma generate
 Crear un env con estas dos variables:
 
 DATABASE_URL="mysql://root@localhost:3306/web"
+
 NUXT_SESSION_PASSWORD=
 
 ## Development Server
