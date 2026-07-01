@@ -183,7 +183,7 @@ const tableMeta = createTableMeta<Evento>()
               <div class="flex flex-col gap-4 mt-6">
                 <input v-model="form.titulo" type="text" placeholder="titulo"
                   class="bg-black border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">
-                <input v-model="form.fecha" type="date" placeholder="fecha"
+                <input v-model="form.fecha" type="date" placeholder="fecha" :min="fechaHoy()"
                   class="font-gray-200 border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">
                 <input v-model="form.lugar" type="text" placeholder="lugar"
                   class="bg-black border border-gray-600 p-3.5 rounded-xl focus:border-neon-blue outline-none transition-all">

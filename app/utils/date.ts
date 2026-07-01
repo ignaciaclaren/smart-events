@@ -4,3 +4,6 @@ export function formatDate(dateString: string) {
         dateStyle: 'medium' 
     }).format(new Date(dateString));
 }
+export function fechaHoy(){
+    return new Date().toISOString().split('T')[0];
+}
