@@ -1,5 +1,6 @@
 # Ignacia Vargas - Paralelo 300
 Repositorio hecho con Nuxt, Vue, Mysql
+
 Tarea "Smart-Events"
 
 ## Instalación
