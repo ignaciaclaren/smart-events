@@ -1,10 +1,8 @@
-# Nuxt Minimal Starter
+# Ignacia Vargas - Paralelo 300
 Repositorio hecho con Nuxt, Vue, Mysql
-https://nuxt.com/docs/getting-started/introduction
+Tarea "Smart-Events"
 
-## Setup
-
-Instalar dependencias:
+## Instalación
 
 ```bash
 # npm
@@ -15,7 +13,7 @@ npx prisma generate
 Importar BD en mysql (web.sql)
 
 
-## Development Server
+## Para desarrollo
 
 Ejecutar servidor de desarrollo en `http://localhost:3000`:
 
@@ -25,26 +23,12 @@ npm run dev
 
 ```
 
-## Production
+## Para producción
 
 ```bash
 # npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-```
+## Bonus
+Colección de postman con los endpoins en la raíz del proyecto
