@@ -1,46 +1,33 @@
 # Nuxt Minimal Starter
-
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Repositorio hecho con Nuxt, Vue, Mysql
+https://nuxt.com/docs/getting-started/introduction
 
 ## Setup
 
-Make sure to install dependencies:
+Instalar dependencias:
 
 ```bash
 # npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npx prisma generate
 ```
+
+## Entorno de desarrollo
+Crear un env con estas dos variables:
+DATABASE_URL="mysql://root@localhost:3306/web"
+NUXT_SESSION_PASSWORD=
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Ejecutar servidor de desarrollo en `http://localhost:3000`:
 
 ```bash
 # npm
 npm run dev
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
-
-Build the application for production:
 
 ```bash
 # npm
@@ -62,14 +49,4 @@ Locally preview production build:
 # npm
 npm run preview
 
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
